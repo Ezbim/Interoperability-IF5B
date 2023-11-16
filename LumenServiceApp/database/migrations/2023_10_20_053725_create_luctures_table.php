@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('department');
+            $table->string('telephone');
+            $table->string('address');
+            $table->string('numberOfStudent');
             $table->timestamps();
         });
     }

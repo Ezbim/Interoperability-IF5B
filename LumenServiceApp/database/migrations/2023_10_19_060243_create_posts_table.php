@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('status', array('draft','published'))->default('draft');
             $table->text('content',65335);
             $table->integer('user_id')->index('user_id_foreign');
+            $table->integer('categories_id')->index('categories_id_foreign');
+            $table->integer('students_id')->index('students_id_foreign');
         });
     }
 

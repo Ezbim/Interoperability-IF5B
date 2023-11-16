@@ -3,19 +3,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
     public function index()
     {
-        $posts = Student::OrderBy("id","DESC")->paginate(10);
+        $posts = Student::Where(['id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(10);
 
-        $outPut = [
-            "message" => "posts",
-            "results" => $posts
+        $response = [
+            "total_count" => $posts->total(),
+            "limit" => $posts->perPage(),
+            "pagination" => [
+                "next_page" => $posts->nextPageUrl(),
+                "current_page" => $posts->currentPage()
+            ],
+            "data" => $posts->items(),
         ];
 
-        return response()->json($posts,200);
+        return response()->json($response,200);
     }
 
     public function store(Request $request)
@@ -63,7 +69,7 @@ class StudentController extends Controller
         $post->delete();
 
         $message = [
-            "message" => "post deleted",
+            "message" => "students deleted",
             "post_id" => $id
         ];
 

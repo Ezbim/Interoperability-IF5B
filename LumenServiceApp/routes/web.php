@@ -28,11 +28,14 @@ $router->get('/users/{id}', 'phpServiceController@user');
 $router->get('humans','HumanController@index');
 
 // Post Contoller
-$router->get('posts', 'PostController@index');
-$router->post('posts','PostController@store');
-$router->get('posts/{id}', 'PostController@show');
-$router->put('posts/{id}','PostController@update');
-$router->delete('posts/{id}','PostController@destroy');
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->get('posts', 'PostController@index');
+    $router->post('posts','PostController@store');
+    $router->get('posts/{id}', 'PostController@show');
+    $router->put('posts/{id}','PostController@update');
+    $router->delete('posts/{id}','PostController@destroy');
+});
+
 
 // Lucture Contoller
 $router->get('lucture', 'LuctureController@index');
@@ -56,8 +59,16 @@ $router->put('product/{id}','ProductController@update');
 $router->delete('product/{id}','ProductController@destroy');
 
 // Student Controller
+$router->group(['middleware' => 'auth'], function () use ($router) {
 $router->get('student', 'StudentController@index');
 $router->post('student','StudentController@store');
 $router->get('student/{id}', 'StudentController@show');
 $router->put('student/{id}','StudentController@update');
 $router->delete('student/{id}','StudentController@destroy');
+});
+
+// User Controller
+$router->group(['prefix' => 'auth'], function () use ($router) {
+    $router->post('/register', 'AuthController@register');
+    $router->post('/login', 'AuthController@login');
+});

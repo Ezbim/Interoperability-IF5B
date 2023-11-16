@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use illuminate\Http\Request;
+
 class UsersController extends Controller
 {
     public function __construct()
@@ -8,8 +11,8 @@ class UsersController extends Controller
         return "Lumen Controller";
     }
 
-    public function index() 
-    {
-        return "Anda mendapatkan response ini dari <b>Controller</b>";
+    public function store(Request $request){
+        $input = $request->all();
+        
     }
 }

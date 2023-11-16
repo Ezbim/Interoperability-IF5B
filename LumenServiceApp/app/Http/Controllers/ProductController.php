@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Lucture;
+use App\Models\Productcategory;
 use Illuminate\Http\Request;
 
-class LuctureController extends Controller
+class ProductController extends Controller
 {
     public function index()
     {
-        $posts = Lucture::OrderBy("id","DESC")->paginate(10);
+        $posts = Productcategory::OrderBy("id","DESC")->paginate(10);
 
         $outPut = [
             "message" => "posts",
@@ -21,14 +21,14 @@ class LuctureController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $post = Lucture::create($input);
+        $post = Productcategory::create($input);
 
         return response()->json($post,200);
     }
 
     public function show($id)
     {
-        $post = Lucture::find($id);
+        $post = Productcategory::find($id);
 
         if(!$post){
             abort(404);
@@ -40,7 +40,7 @@ class LuctureController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->all();
-        $post = Lucture::find($id);
+        $post = Productcategory::find($id);
 
         if(!$post){
             abort(404);
@@ -54,7 +54,7 @@ class LuctureController extends Controller
 
     public function destroy($id)
     {
-        $post = Lucture::find($id);
+        $post = Productcategory::find($id);
 
         if(!$post){
             abort(404);
@@ -63,7 +63,7 @@ class LuctureController extends Controller
         $post->delete();
 
         $message = [
-            "message" => "post deleted",
+            "message" => "product deleted",
             "post_id" => $id
         ];
 
